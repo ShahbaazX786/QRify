@@ -35,7 +35,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <GestureHandlerRootView className="flex-1">
-        <Drawer>
+        <Drawer defaultStatus="closed" initialRouteName="(tabs)">
           <Drawer.Screen
             name="(tabs)"
             options={{
