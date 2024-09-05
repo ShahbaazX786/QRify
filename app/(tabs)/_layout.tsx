@@ -3,7 +3,7 @@ import React from "react";
 
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -16,20 +16,33 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="generate"
         options={{
-          title: "Home",
+          title: "Generate",
           tabBarIcon: ({ color, focused }) => (
-            <AntDesign name="pluscircle" size={24} color="black" />
+            <MaterialCommunityIcons
+              name="qrcode-plus"
+              size={24}
+              color="black"
+            />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="scan"
         options={{
-          title: "Explore",
+          title: "Scan",
           tabBarIcon: ({ color, focused }) => (
-            <AntDesign name="pluscircle" size={24} color="black" />
+            <MaterialIcons name="qr-code-scanner" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="history"
+        options={{
+          title: "History",
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons name="history" size={24} color="black" />
           ),
         }}
       />
