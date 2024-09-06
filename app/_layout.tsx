@@ -12,6 +12,7 @@ import LoginButton from "@/components/LoginButton";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ClerkProvider } from "@clerk/clerk-expo";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -21,6 +22,8 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
+
+  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
   useEffect(() => {
     if (loaded) {
@@ -32,25 +35,33 @@ export default function RootLayout() {
     return null;
   }
 
+  if (!publishableKey) {
+    throw new Error(
+      "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
+    );
+  }
+
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <GestureHandlerRootView className="flex-1">
-        <Stack>
-          <Stack.Screen
-            name="index"
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              headerShown: false,
-              headerRight: () => <LoginButton />,
-            }}
-          />
-        </Stack>
-      </GestureHandlerRootView>
+      <ClerkProvider publishableKey={publishableKey}>
+        <GestureHandlerRootView className="flex-1">
+          <Stack>
+            <Stack.Screen
+              name="index"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerShown: false,
+                headerRight: () => <LoginButton />,
+              }}
+            />
+          </Stack>
+        </GestureHandlerRootView>
+      </ClerkProvider>
     </ThemeProvider>
   );
 }
