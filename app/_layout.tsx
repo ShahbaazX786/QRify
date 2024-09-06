@@ -10,9 +10,9 @@ import "react-native-reanimated";
 
 import LoginButton from "@/components/LoginButton";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { ClerkProvider } from "@clerk/clerk-expo";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -44,23 +44,25 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <ClerkProvider publishableKey={publishableKey}>
-        <GestureHandlerRootView className="flex-1">
-          <Stack>
-            <Stack.Screen
-              name="index"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="(tabs)"
-              options={{
-                headerShown: false,
-                headerRight: () => <LoginButton />,
-              }}
-            />
-          </Stack>
-        </GestureHandlerRootView>
+        <ClerkLoaded>
+          <GestureHandlerRootView className="flex-1">
+            <Stack>
+              <Stack.Screen
+                name="index"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="(tabs)"
+                options={{
+                  headerShown: false,
+                  headerRight: () => <LoginButton />,
+                }}
+              />
+            </Stack>
+          </GestureHandlerRootView>
+        </ClerkLoaded>
       </ClerkProvider>
     </ThemeProvider>
   );
