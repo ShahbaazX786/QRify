@@ -10,7 +10,7 @@ import "react-native-reanimated";
 
 import LoginButton from "@/components/LoginButton";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { Drawer } from "expo-router/drawer";
+import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -35,16 +35,21 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <GestureHandlerRootView className="flex-1">
-        <Drawer defaultStatus="closed" initialRouteName="(tabs)">
-          <Drawer.Screen
+        <Stack>
+          <Stack.Screen
+            name="index"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="(tabs)"
             options={{
-              drawerLabel: "Home",
-              title: "",
+              headerShown: true,
               headerRight: () => <LoginButton />,
             }}
           />
-        </Drawer>
+        </Stack>
       </GestureHandlerRootView>
     </ThemeProvider>
   );
