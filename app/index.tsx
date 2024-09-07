@@ -17,6 +17,14 @@ const Welcome = () => {
     return <Redirect href={"/(tabs)/generate"} />;
   }
 
+  const initialRedirect = () => {
+    if (isSignedIn) {
+      router.replace("/(tabs)/generate");
+    } else {
+      router.replace("/(public)/register");
+    }
+  };
+
   return (
     <SafeAreaView className="bg-blue-800 relative justify-center items-center flex flex-col">
       <WaveTop className="w-full h-36 opacity-100 stroke-black shadow-xl absolute top-0 left-0 z-10" />
@@ -36,7 +44,7 @@ const Welcome = () => {
             Discover the best way to Create and share QR codes effortlessly,
             like never before
           </Text>
-          <TouchableOpacity onPress={() => router.replace("/(tabs)/generate")}>
+          <TouchableOpacity onPress={initialRedirect}>
             <BeginButton title={"get started"} />
           </TouchableOpacity>
         </View>
