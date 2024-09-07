@@ -15,6 +15,7 @@ import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as SecureStore from "expo-secure-store";
 import { TokenCache } from "@/constants/types";
+import { PaperProvider } from "react-native-paper";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -70,34 +71,36 @@ const RootLayout = () => {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-        <ClerkLoaded>
-          <GestureHandlerRootView className="flex-1">
-            <Stack initialRouteName="index">
-              <Stack.Screen
-                name="index"
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="(tabs)"
-                options={{
-                  headerShown: false,
-                  headerRight: () => <LoginButton />,
-                }}
-              />
-              <Stack.Screen
-                name="(public)"
-                options={{
-                  headerShown: false,
-                  headerRight: () => <LoginButton />,
-                }}
-              />
-            </Stack>
-          </GestureHandlerRootView>
-        </ClerkLoaded>
-      </ClerkProvider>
+      <PaperProvider>
+        <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+          <ClerkLoaded>
+            <GestureHandlerRootView className="flex-1">
+              <Stack initialRouteName="index">
+                <Stack.Screen
+                  name="index"
+                  options={{
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="(tabs)"
+                  options={{
+                    headerShown: false,
+                    headerRight: () => <LoginButton />,
+                  }}
+                />
+                <Stack.Screen
+                  name="(public)"
+                  options={{
+                    headerShown: false,
+                    headerRight: () => <LoginButton />,
+                  }}
+                />
+              </Stack>
+            </GestureHandlerRootView>
+          </ClerkLoaded>
+        </ClerkProvider>
+      </PaperProvider>
     </ThemeProvider>
   );
 };
