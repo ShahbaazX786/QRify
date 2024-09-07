@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Button, View, Text, TouchableOpacity } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
-import { TextInput } from "react-native-paper";
+import * as React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { Button, TextInput } from "react-native-paper";
 
 const Register = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -74,25 +74,24 @@ const Register = () => {
             label={"Email Address"}
             autoCapitalize="none"
             value={emailAddress}
-            right={<TextInput.Icon icon="eye" />}
             placeholder="Email..."
             onChangeText={(email) => setEmailAddress(email)}
           />
           <TextInput
+            mode="outlined"
             value={password}
+            label={"Password"}
             placeholder="Password..."
             secureTextEntry={true}
+            right={<TextInput.Icon icon="eye" />}
             onChangeText={(password) => setPassword(password)}
           />
-          <Button title="Sign Up" onPress={onSignUpPress} />
-          <TouchableOpacity
-            className="flex flex-row justify-center items-center"
-            onPress={handleRedirection}
-          >
-            <Text className="text-base text-gray-400 mr-4">
-              Already have an account?
-            </Text>
-          </TouchableOpacity>
+          <Button mode="contained" onPress={onSignUpPress}>
+            <Text className="text-lg">Register</Text>
+          </Button>
+          <Button mode="text" onPress={handleRedirection}>
+            <Text className="text-lg">Already have an account?</Text>
+          </Button>
         </View>
       )}
       {pendingVerification && (
@@ -102,7 +101,9 @@ const Register = () => {
             placeholder="Code..."
             onChangeText={(code) => setCode(code)}
           />
-          <Button title="Verify Email" onPress={onPressVerify} />
+          <Button mode="contained" onPress={onPressVerify}>
+            <Text className="text-lg">Verify Email</Text>
+          </Button>
         </>
       )}
     </View>
