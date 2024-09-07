@@ -1,7 +1,8 @@
 import * as React from "react";
-import { TextInput, Button, View, Text, TouchableOpacity } from "react-native";
+import { Button, View, Text, TouchableOpacity } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
+import { TextInput } from "react-native-paper";
 
 const Register = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -69,8 +70,11 @@ const Register = () => {
             </Text>
           </View>
           <TextInput
+            mode="outlined"
+            label={"Email Address"}
             autoCapitalize="none"
             value={emailAddress}
+            right={<TextInput.Icon icon="eye" />}
             placeholder="Email..."
             onChangeText={(email) => setEmailAddress(email)}
           />
