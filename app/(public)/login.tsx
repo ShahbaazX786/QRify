@@ -1,7 +1,8 @@
 import { useSignIn } from "@clerk/clerk-expo";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import { Text, TextInput, Button, View } from "react-native";
+import { Text, View } from "react-native";
+import { Button, TextInput } from "react-native-paper";
 
 const Login = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -33,26 +34,42 @@ const Login = () => {
     }
   }, [isLoaded, emailAddress, password]);
 
+  const handleRedirection = () => {
+    router.replace("/(public)/register");
+  };
+
   return (
-    <View>
-      <TextInput
-        autoCapitalize="none"
-        value={emailAddress}
-        placeholder="Email..."
-        onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-      />
-      <TextInput
-        value={password}
-        placeholder="Password..."
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-      <Button title="Sign In" onPress={onSignInPress} />
-      <View>
-        <Text>Don't have an account?</Text>
-        <Link href="/sign-up">
-          <Text>Sign up</Text>
-        </Link>
+    <View className="px-4 py-2 flex-1 bg-blue-50 flex justify-center items-center">
+      <View
+        className="w-full h-auto bg-white rounded-lg px-4 py-6 space-y-6"
+        style={{ elevation: 4 }}
+      >
+        <View>
+          <Text className="text-center font-bold text-2xl">Log In</Text>
+        </View>
+        <TextInput
+          mode="outlined"
+          label={"Email Address"}
+          autoCapitalize="none"
+          value={emailAddress}
+          placeholder="Email..."
+          onChangeText={(email) => setEmailAddress(email)}
+        />
+        <TextInput
+          mode="outlined"
+          value={password}
+          label={"Password"}
+          placeholder="Password..."
+          secureTextEntry={true}
+          right={<TextInput.Icon icon="eye" />}
+          onChangeText={(password) => setPassword(password)}
+        />
+        <Button mode="contained" onPress={onSignInPress}>
+          <Text className="text-lg">Login</Text>
+        </Button>
+        <Button mode="text" onPress={handleRedirection}>
+          <Text className="text-lg">Don't Have an Account?</Text>
+        </Button>
       </View>
     </View>
   );
