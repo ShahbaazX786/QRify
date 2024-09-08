@@ -2,17 +2,23 @@ import { useSignIn } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { Text, View } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Button,
+  MD2Colors,
+  TextInput,
+} from "react-native-paper";
 
 const Login = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
-
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
 
   const onSignInPress = useCallback(async () => {
+    setLoading(true);
     if (!isLoaded) {
       return;
     }
@@ -29,7 +35,9 @@ const Login = () => {
       } else {
         console.error(JSON.stringify(signInAttempt, null, 2));
       }
+      setLoading(false);
     } catch (err: any) {
+      setLoading(false);
       console.error(JSON.stringify(err, null, 2));
     }
   }, [isLoaded, emailAddress, password]);
@@ -39,7 +47,14 @@ const Login = () => {
   };
 
   return (
-    <View className="px-4 py-2 flex-1 bg-blue-50 flex justify-center items-center">
+    <View className="px-4 py-2 flex-1 bg-blue-50 flex justify-center items-center relative">
+      <ActivityIndicator
+        className="absolute z-50"
+        animating={loading}
+        color={MD2Colors.purple800}
+        size={"large"}
+        hidesWhenStopped={true}
+      />
       <View
         className="w-full h-auto bg-white rounded-lg px-4 py-6 space-y-6"
         style={{ elevation: 4 }}

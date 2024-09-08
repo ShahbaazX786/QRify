@@ -1,5 +1,4 @@
 import { useSignUp } from "@clerk/clerk-expo";
-import { isLoading } from "expo-font";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
@@ -24,7 +23,6 @@ const Register = () => {
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-
   const onSignUpPress = async () => {
     setLoading(true);
     if (!isLoaded) {
