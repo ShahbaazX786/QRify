@@ -54,7 +54,7 @@ const Register = () => {
   };
 
   const handleRedirection = () => {
-    router.push("/(public)/login");
+    router.replace("/(public)/login");
   };
 
   return (
