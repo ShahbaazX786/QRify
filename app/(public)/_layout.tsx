@@ -13,8 +13,8 @@ const PublicLayout = () => {
         name="register"
         options={{ headerTitle: "Create Account" }}
       />
-      <Stack.Screen name="login" options={{ headerTitle: "Clerk Auth App" }} />
-      <Stack.Screen name="reset" options={{ headerTitle: "Log in" }} />
+      <Stack.Screen name="login" options={{ headerTitle: "Welcome Back" }} />
+      <Stack.Screen name="reset" options={{ headerTitle: "Reset Password" }} />
     </Stack>
   );
 };
