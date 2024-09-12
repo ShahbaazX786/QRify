@@ -1,10 +1,12 @@
 import { useSignIn } from "@clerk/clerk-expo";
-import { useRouter } from "expo-router";
+import { Feather, Octicons } from "@expo/vector-icons";
+import { Link, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import { Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import {
   ActivityIndicator,
   Button,
+  Divider,
   MD2Colors,
   TextInput,
 } from "react-native-paper";
@@ -47,46 +49,94 @@ const Login = () => {
   };
 
   return (
-    <View className="px-4 py-2 flex-1 bg-blue-50 flex justify-center items-center relative">
-      <ActivityIndicator
-        className="absolute z-50"
-        animating={loading}
-        color={MD2Colors.purple800}
-        size={"large"}
-        hidesWhenStopped={true}
-      />
-      <View
-        className="w-full h-auto bg-white rounded-lg px-4 py-6 space-y-6"
-        style={{ elevation: 4 }}
-      >
-        <View>
-          <Text className="text-center font-bold text-2xl">Log In</Text>
+    <ScrollView className="bg-white">
+      <View className="py-2 flex-1 flex justify-center items-center relative">
+        <ActivityIndicator
+          className="absolute z-50"
+          animating={loading}
+          color={MD2Colors.purple800}
+          size={"large"}
+          hidesWhenStopped={true}
+        />
+        <Image
+          source={require("@/assets/images/login.png")}
+          resizeMode="contain"
+          className="w-[400px] min-w-[300px] h-[300px]"
+        />
+        <View className="flex flex-col justify-start items-start w-full px-6 space-y-4">
+          <Text className="text-4xl font-bold text-black">Login</Text>
+          <View className="flex flex-row justify-start items-center my-2">
+            <Octicons name="mention" size={24} color="black" className="mr-2" />
+            <TextInput
+              mode="flat"
+              autoCapitalize="none"
+              value={emailAddress}
+              placeholder="Email ID"
+              onChangeText={(email) => setEmailAddress(email)}
+              className="w-[90%] bg-white"
+            />
+          </View>
+          <View className="flex flex-row justify-start items-center my-2">
+            <Feather name="lock" size={24} color="black" className="mr-2" />
+            <TextInput
+              mode="flat"
+              autoCapitalize="none"
+              value={emailAddress}
+              placeholder="Password"
+              onChangeText={(email) => setEmailAddress(email)}
+              className="w-[90%] bg-white"
+            />
+          </View>
+          <Text className="w-full text-right text-md text-gray-500 leading-6 my-4">
+            <Link
+              href={"www.google.com"}
+              className="text-blue-500 text-base font-bold"
+            >
+              Forgot Password?
+            </Link>
+          </Text>
+          <View className="w-full">
+            <Button
+              mode="contained"
+              onPress={onSignInPress}
+              className="bg-blue-500 h-14 flex justify-center items-center"
+            >
+              <Text className="text-xl">Login</Text>
+            </Button>
+            <View className="flex-row justify-center items-start mt-6 mx-6">
+              <Divider
+                bold={true}
+                horizontalInset={true}
+                className="my-2 w-[50%]"
+              />
+              <Text>OR</Text>
+              <Divider
+                bold={true}
+                horizontalInset={true}
+                className="my-2 w-[50%]"
+              />
+            </View>
+            <Button
+              mode="contained-tonal"
+              onPress={handleRedirection}
+              className="h-14 flex justify-center items-center mt-5"
+            >
+              <Text className="text-base text-gray-500">
+                Log In with Google
+              </Text>
+            </Button>
+            <Button mode="text" onPress={handleRedirection} className="mt-5">
+              <Text className="text-base text-gray-500">
+                New to QRify?{"  "}
+                <Link href={"/(public)/register"} className="text-blue-500">
+                  Register
+                </Link>
+              </Text>
+            </Button>
+          </View>
         </View>
-        <TextInput
-          mode="outlined"
-          label={"Email Address"}
-          autoCapitalize="none"
-          value={emailAddress}
-          placeholder="Email..."
-          onChangeText={(email) => setEmailAddress(email)}
-        />
-        <TextInput
-          mode="outlined"
-          value={password}
-          label={"Password"}
-          placeholder="Password..."
-          secureTextEntry={true}
-          right={<TextInput.Icon icon="eye" />}
-          onChangeText={(password) => setPassword(password)}
-        />
-        <Button mode="contained" onPress={onSignInPress}>
-          <Text className="text-lg">Login</Text>
-        </Button>
-        <Button mode="text" onPress={handleRedirection}>
-          <Text className="text-lg">Don't Have an Account?</Text>
-        </Button>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
